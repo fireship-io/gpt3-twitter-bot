@@ -1,0 +1,20 @@
+{
+  "name": "tweetbot",
+  "description": "A Twitter bot powered by AI",
+  "engines": {
+    "node": "14"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^9.8.0",
+    "openai": "^2.0.2",
+    "twitter-api-v2": "^1.10.0",
+    "express": "^4.17.2",
+  },
+  "devDependencies": {
+    "eslint": "^7.6.0",
+    "eslint-config-google": "^0.14.0",
+    "firebase-functions-test": "^0.2.0"
+  },
+  "private": true
+}
