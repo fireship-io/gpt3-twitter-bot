@@ -23,7 +23,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 // STEP 1 - Auth URL
-exports.auth = functions.https.onRequest((request, response) => {
+exports.auth = functions.https.onRequest(async (request, response) => {
   const { url, codeVerifier, state } = twitterClient.generateOAuth2AuthLink(
     callbackURL,
     { scope: ['tweet.read', 'tweet.write', 'users.read', 'offline.access'] }
