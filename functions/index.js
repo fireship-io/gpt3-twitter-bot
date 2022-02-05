@@ -17,8 +17,8 @@ const callbackURL = 'http://127.0.0.1:5000/faxnow-app/us-central1/callback';
 // OpenAI API init
 const { Configuration, OpenAIApi } = require('openai');
 const configuration = new Configuration({
-  organization: 'YOUR_OPENAI_ORG',
-  apiKey: 'YOUR_OPENAI_SECRET',
+  apiKey: 'API-KEY',
+  basePath: 'https://api.goose.ai/v1',
 });
 const openai = new OpenAIApi(configuration);
 
@@ -75,13 +75,14 @@ exports.tweet = functions.https.onRequest((request, response) => {
 
   await dbRef.set({ accessToken, refreshToken: newRefreshToken });
 
-  const nextTweet = await openai.createCompletion('text-davinci-001', {
-    prompt: 'tweet something cool for #techtwitter',
+  const nextTweet = await openai.createCompletion('gpt-neo-20b', {
+    prompt: `Tweet something cool for #techtwitter:\n"Let's know each other... I'm a front-end developer and you?"\n"What are you up to this weekend? I am going through the tech-related stories and news that have happened over the week."\n"`,
     max_tokens: 64,
+    temperature: 0.68
   });
 
   const { data } = await refreshedClient.v2.tweet(
-    nextTweet.data.choices[0].text
+    nextTweet.data.choices[0].text.split('"')[0]
   );
 
   response.send(data);
